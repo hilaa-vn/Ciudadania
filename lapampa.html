@@ -319,6 +319,84 @@
 }
 
 
+/* ---------------- RESPONSIVE DESIGN ---------------- */
+
+@media (max-width: 768px) {
+  .slide {
+    width: 95%;
+    padding: 30px 20px;
+  }
+
+  .slide h1, .slide h2 {
+    font-size: 2rem;
+  }
+
+  .slide p {
+    font-size: 1rem;
+  }
+
+  .slide img {
+    max-height: 200px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 10px;
+    bottom: 20px;
+  }
+
+  .envelope {
+    transform: scale(0.8);
+  }
+
+  .intro-screen {
+    font-size: 1rem;
+    padding: 0 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .envelope {
+    transform: scale(0.7);
+  }
+
+  .letter {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .envelope-body {
+    font-size: 1.2rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .slide p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .slide h1, .slide h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Permitir scroll vertical si es necesario */
+body {
+  overflow-x: hidden;
+}
+
+
+
   </style>
 </head>
 <body>
@@ -361,7 +439,7 @@
 </div>
 <div class="slide">
   <h2>Fauna Pampeana</h2>
-  <p>Fauna nativa como el zorro gris, ñandú, puma, armadillo (peludo) y mara.</p>
+  <p>Fauna nativa como el Ciervo, armadillo (peludo) y mara.</p>
   <img src="https://cdn0.ecologiaverde.com/es/posts/7/2/3/_3327_4_orig.jpg" alt="Fauna La Pampa - Mara">
 </div>
 <div class="slide"><h1>¡Gracias por ver!</h1></div>
