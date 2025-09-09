@@ -13,17 +13,20 @@
       padding: 0;
     }
 
-    body {
+    html, body {
+      height: 100%;
       font-family: 'Rubik', sans-serif;
-      height: 100vh;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/8/83_La_Pampa_Location_map.svg') no-repeat center center/cover;
       overflow: hidden;
-      position: relative;
+    }
+
+    body {
+      background: url('https://upload.wikimedia.org/wikipedia/commons/8/83_La_Pampa_Location_map.svg') no-repeat center center/cover;
       color: white;
+      position: relative;
     }
 
     .overlay {
-      position: absolute;
+      position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
@@ -31,13 +34,14 @@
     }
 
     .bubbles {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
       z-index: 1;
+      pointer-events: none;
     }
 
     .bubble {
@@ -49,90 +53,56 @@
     }
 
     @keyframes floatBubble {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(-120vh) scale(1.2);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 0.5; }
+      100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
     }
 
     .slide {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      width: 90%;
-      max-width: 1000px;
-      padding: 50px;
-      text-align: center;
-      border-radius: 20px;
+      position: relative;
+      width: 794px; /* A4 width */
+      height: 1123px; /* A4 height */
+      max-width: 100%;
+      max-height: 100vh;
+      margin: auto;
+      padding: 30px;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(15px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      overflow: hidden;
       z-index: 2;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.8s ease-in-out;
-    }
-
-    .slide.active {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-      pointer-events: all;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
     }
 
     .slide h1, .slide h2 {
-      font-size: 3rem;
-      margin-bottom: 20px;
+      font-size: 2rem;
       color: #fff;
     }
 
     .slide p {
-      font-size: 1.5rem;
-      max-width: 800px;
-      margin: auto;
-      line-height: 1.7;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      margin: 10px auto;
     }
 
     .slide img {
       max-width: 100%;
-      max-height: 300px;
-      margin: 30px 0;
+      max-height: 120px;
       border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      margin: 10px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    .controls {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 20px;
-      z-index: 3;
+    hr {
+      border: 1px solid rgba(255,255,255,0.3);
+      margin: 10px auto;
+      width: 60%;
     }
 
-    button {
-      padding: 14px 28px;
-      font-size: 20px;
-      border: none;
-      border-radius: 50px;
-      background: rgba(255, 255, 255, 0.25);
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      transition: background 0.3s, transform 0.2s;
-      backdrop-filter: blur(10px);
-    }
-
-    button:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: scale(1.05);
-    }
-
+    /* ENVELOPE STYLES (sin cambios mayores) */
     .intro-screen {
       position: fixed;
       inset: 0;
@@ -167,12 +137,8 @@
     }
 
     @keyframes pulseEnvelope {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
     .envelope:focus {
@@ -193,7 +159,7 @@
       transform-origin: bottom center;
       clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 60%, 0 100%);
       z-index: 3;
-      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), background 0.9s, box-shadow 0.9s;
+      transition: transform 0.9s, background 0.9s, box-shadow 0.9s;
       box-shadow: inset 0 4px 6px rgba(255, 255, 255, 0.9), 0 6px 15px rgba(0, 0, 0, 0.3);
     }
 
@@ -212,7 +178,6 @@
       background: linear-gradient(145deg, #f8f1e5, #d6cbb4);
       border: 1.5px solid #b4a88c;
       border-radius: 0 0 12px 12px;
-      box-shadow: inset 0 -4px 6px rgba(255, 255, 255, 0.6), 0 4px 12px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -234,6 +199,14 @@
       transform: translateY(30px);
       transition: all 1s ease;
       z-index: 4;
+      padding: 10px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.3;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .envelope.open .letter {
@@ -246,11 +219,6 @@
       background: linear-gradient(145deg, #fff, #e0e0e0);
       box-shadow: inset 0 8px 18px rgba(255, 255, 255, 1), 0 12px 30px rgba(0, 0, 0, 0.6);
       filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
-    }
-
-    .envelope.open .envelope-body {
-      transform: translateY(15px);
-      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .envelope.open::after {
@@ -269,183 +237,77 @@
     }
 
     @keyframes flapOpen {
-      0% { transform: rotateX(0deg) translateZ(0); }
-      60% { transform: rotateX(-90deg) translateZ(20px); }
-      100% { transform: rotateX(-100deg) translateZ(15px); }
+      0% { transform: rotateX(0deg); }
+      100% { transform: rotateX(-160deg); }
     }
 
     @keyframes flapFloat {
-      0%, 100% {
-        transform-origin: bottom center;
-        transform: rotateX(-100deg) translateZ(15px) rotateZ(0deg);
-      }
-      50% {
-        transform-origin: bottom center;
-        transform: rotateX(-95deg) translateZ(15px) rotateZ(2deg);
-      }
+      0%, 100% { transform: rotateX(-160deg) translateY(0); }
+      50% { transform: rotateX(-160deg) translateY(-5px); }
     }
 
     @keyframes pulseGlow {
-      0% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.3); }
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.2); }
     }
 
-.letter {
-  position: absolute;
-  top: 20px;
-  left: 10px;
-  width: 160px;
-  height: 100px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 1s ease;
-  z-index: 4;
+    @media (max-width: 768px) {
+      .slide {
+        width: 95%;
+        height: 95vh;
+        padding: 20px 15px;
+      }
 
-  /* 👇 Agregá estas líneas */
-  padding: 10px;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.3;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-wrap: wrap;
-  word-break: break-word;
-}
+      .slide img {
+        max-height: 100px;
+      }
 
+      .slide h1, .slide h2 {
+        font-size: 1.5rem;
+      }
 
-/* ---------------- RESPONSIVE DESIGN ---------------- */
+      .slide p {
+        font-size: 1rem;
+      }
+    }
 
-@media (max-width: 768px) {
+/* Estilos para impresión */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+  }
+
   .slide {
-    width: 95%;
-    padding: 30px 20px;
+    box-shadow: none !important;
+    background: white !important;
+    color: black !important;
+    width: 100%;
+    height: auto;
   }
 
-  .slide h1, .slide h2 {
-    font-size: 2rem;
-  }
-
-  .slide p {
-    font-size: 1rem;
-  }
-
-  .slide img {
-    max-height: 200px;
-  }
-
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-
-  .controls {
-    flex-direction: column;
-    gap: 10px;
-    bottom: 20px;
-  }
-
-  .envelope {
-    transform: scale(0.8);
-  }
-
+  .overlay,
+  .bubbles,
   .intro-screen {
-    font-size: 1rem;
-    padding: 0 10px;
-    text-align: center;
+    display: none !important;
+  }
+
+  img {
+    max-height: 200px !important;
+    page-break-inside: avoid;
+  }
+
+  hr {
+    border-color: #333 !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 20mm;
   }
 }
-
-@media (max-width: 480px) {
-  .envelope {
-    transform: scale(0.7);
-  }
-
-  .letter {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .envelope-body {
-    font-size: 1.2rem;
-  }
-
-  .controls {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .slide p {
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-
-  .slide h1, .slide h2 {
-    font-size: 1.6rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .slide {
-    width: 98%;
-    padding: 15px 10px;
-  }
-
-  .slide h1, .slide h2 {
-    font-size: 1.4rem;
-  }
-
-  .slide p {
-    font-size: 0.85rem;
-    line-height: 1.4;
-  }
-
-  .slide img {
-    max-height: 140px;
-  }
-
-  .letter {
-    font-size: 11px;
-    padding: 6px;
-  }
-
-  .envelope-body {
-    font-size: 1rem;
-  }
-
-  .envelope {
-    transform: scale(0.6);
-  }
-
-  .controls {
-    flex-direction: column;
-    gap: 6px;
-    bottom: 10px;
-  }
-
-  .controls button {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  .intro-screen {
-    font-size: 0.95rem;
-    padding: 0 8px;
-  }
-}
-
-
-
-/* Permitir scroll vertical si es necesario */
-body {
-  overflow-x: hidden;
-}
-
 
 
   </style>
@@ -464,61 +326,41 @@ body {
 <div class="overlay"></div>
 <div class="bubbles" aria-hidden="true"></div>
 
-<div class="slide active"><h1>Provincia de La Pampa</h1></div>
-<div class="slide">
+<div class="slide active">
+  <h1>Provincia de La Pampa</h1>
+
   <h2>Ubicación e Información Básica</h2>
   <p><strong>Capital:</strong> Santa Rosa<br>
      <strong>Habitantes:</strong> ~318,000<br>
      <strong>Superficie:</strong> 143,440 km²<br>
      <strong>Fundación:</strong> 1951</p>
   <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Flag_map_of_La_Pampa.png" alt="Mapa de La Pampa">
-</div>
-<div class="slide">
+  
+  <hr>
+
   <h2>Bandera de La Pampa</h2>
   <p>Los colores representan el paisaje pampeano y la identidad provincial.</p>
   <img src="https://static.vecteezy.com/system/resources/previews/012/935/200/large_2x/la-pampa-flag-argentina-provinces-illustration-vector.jpg" alt="Bandera La Pampa">
-</div>
-<div class="slide">
+
+  <hr>
+
   <h2>Actividad Económica</h2>
   <p>Agricultura (trigo, maíz), ganadería, industria alimentaria, energía (eólica y gas).</p>
   <img src="https://userscontent2.emaze.com/images/63301bc6-fc29-451b-a4eb-4b22c81aaf72/43ba6e55c5bf96a6024807a89c21fb9a.png" alt="Agricultura en La Pampa">
-</div>
-<div class="slide">
-  <h2>Flora Pampeana</h2>
-  <p>Especies típicas como Flechillares, Pasto colorado, Heno lenoso, Tembladerilla y Poa.</p>
-  <img src="https://www.defrentealcampo.com.ar/wp-content/uploads/2021/03/flora_de_la_region_pampeana_3327_1_orig-1024x683.jpg" alt="Flora La Pampa">
-</div>
-<div class="slide">
-  <h2>Fauna Pampeana</h2>
-  <p>Fauna nativa como el Ciervo, armadillo (peludo) y mara.</p>
-  <img src="https://cdn0.ecologiaverde.com/es/posts/7/2/3/_3327_4_orig.jpg" alt="Fauna La Pampa - Mara">
-</div>
-<div class="slide"><h1>¡Gracias por ver!</h1></div>
 
-<div class="controls">
-  <button onclick="prevSlide()">⟵ Anterior</button>
-  <button onclick="nextSlide()">Siguiente ⟶</button>
+  <hr>
+
+  <h2>Flora y Fauna</h2>
+  <p>Flora: Flechillares, Pasto colorado, Tembladerilla.<br>
+     Fauna: Ciervo, armadillo, mara.</p>
+  <img src="https://cdn0.ecologiaverde.com/es/posts/7/2/3/_3327_4_orig.jpg" alt="Fauna La Pampa - Mara">
+
+  <hr>
+
+  <h1>¡Gracias por ver!</h1>
 </div>
 
 <script>
-  const slides = document.querySelectorAll('.slide');
-  let currentSlide = 0;
-
-  function showSlide(index) {
-    slides.forEach((slide) => slide.classList.remove('active'));
-    slides[index].classList.add('active');
-  }
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-  }
-
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(currentSlide);
-  }
-
   const bubblesContainer = document.querySelector('.bubbles');
   for (let i = 0; i < 20; i++) {
     const bubble = document.createElement('div');
@@ -537,14 +379,10 @@ body {
 
   function openEnvelope() {
     envelope.classList.add('open');
-    const audio = new Audio('');
-    audio.play();
-
     setTimeout(() => {
       introScreen.style.opacity = 0;
       introScreen.style.pointerEvents = 'none';
-      introScreen.style.display = 'none'; // oculta por completo
-      showSlide(currentSlide); // muestra el primer slide
+      introScreen.style.display = 'none';
     }, 1500);
   }
 
@@ -555,18 +393,6 @@ body {
       e.preventDefault();
     }
   });
-
-document.addEventListener('keydown', (e) => {
-  if (introScreen.style.display === 'none') { // Solo permite navegar después de abrir el sobre
-    if (e.key === 'ArrowRight') {
-      nextSlide();
-    } else if (e.key === 'ArrowLeft') {
-      prevSlide();
-    }
-  }
-});
-
-
 </script>
 
 </body>
